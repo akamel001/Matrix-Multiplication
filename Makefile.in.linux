@@ -1,0 +1,21 @@
+# C and Fortran compilers
+CC = /share/apps/local/bin/gcc
+FC = /share/apps/local/bin/gfortran
+
+# Compiler optimization flags.  You will definitely want to play with these!
+OPTFLAGS = -O3
+CFLAGS = $(OPTFLAGS)
+FFLAGS = $(OPTFLAGS)
+
+# Add -DDEBUG_RUN to CPPFLAGS to cut down on the cases.
+CPPFLAGS = "-DCOMPILER=\"$(CC)\"" "-DFLAGS=\"$(OPTFLAGS)\""
+
+# Compile a C version (using basic_dgemm.c, in this case):
+LIBS = -lm -lrt
+OBJS = matmul.o timing.o
+
+# Libraries and include files for ATLAS BLAS
+LIBBLAS=-L/share/apps/local/atlas/lib/ -lcblas -latlas
+LIBPBLAS=-L/share/apps/local/atlas/lib/ -lptcblas -latlas -lpthread
+INCBLAS=-I/share/apps/local/atlas/include
+

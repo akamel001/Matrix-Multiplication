@@ -1,0 +1,62 @@
+\documentclass[11pt,leqno]{article}
+\usepackage{amsfonts, amsmath}
+\usepackage{fancyhdr}
+\usepackage[
+  letterpaper=true,
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=red,
+  pdfpagemode=None]{hyperref}
+
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{listings}
+
+\title{Performance of basic matmul}
+\author{David Bindel}
+
+\begin{document}
+
+\pagestyle{fancy}
+\lhead{Bindel, Fall 2011}
+\rhead{Applications of Parallel Computers (CS 5220)}
+\fancyfoot{}
+
+\maketitle
+
+This is a simple \LaTeX\ file to demonstrate how I use the
+{\tt listings} package to include nicely typeset code in my documents,
+and how I use {\tt pgfplots} to generate nice-looking plots.
+In order to compile this document, you will need to have a \LaTeX\ 
+installation with PGF and TikZ installed.
+
+The code is shown in Figure~\ref{fig-naive-matmul}, and the performance
+is shown in Figure~\ref{fig-naive-perf}.  The performance is never that
+high, but it falls off a clif for the dimensions greater than 400.
+Notice the interesting wiggles in the performance curve due to cache
+associativity effects.
+
+\begin{figure}
+\lstset{language=c,frame=lines,columns=flexible}
+\lstinputlisting{basic_dgemm.c}
+\caption{Naive matrix-matrix multiplication code in C.}
+\label{fig-naive-matmul}
+\end{figure}
+
+\begin{figure}
+\begin{tikzpicture}
+\begin{axis}[
+  /pgf/number format/set thousands separator={},
+  width=0.8\textwidth, height=3in,
+  xlabel={$n$},
+  ylabel={MFlop/s}]
+\addplot file {timing-basic.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Performance of naive matrix-matrix multiplication code.}
+\label{fig-naive-perf}
+\end{figure}
+
+\end{document}
